@@ -50,6 +50,9 @@ let projectHeaderSearchPaths = [
 
 let cHeaderSearchPaths: [CSetting] = projectHeaderSearchPaths.map { .headerSearchPath($0) }
 
+let crashReporter = Package.Dependency.package(url: "https://github.com/microsoft/plcrashreporter.git", .upToNextMinor(from: "1.11.0"))
+crashReporter.moduleAliases = ["CrashReporter": "PLCrashReporter"]
+
 let package = Package(
     name: "AppCenter",
     platforms: [
@@ -66,7 +69,7 @@ let package = Package(
             targets: ["AppCenterCrashes"])
     ],
     dependencies: [
-        .package(url: "https://github.com/microsoft/plcrashreporter.git", .upToNextMinor(from: "1.11.0")),
+        crashReporter
     ],
     targets: [
         .target(
